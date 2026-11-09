@@ -1,0 +1,20 @@
+{
+  "name": "마음숲심리코칭",
+  "short_name": "마음숲",
+  "icons": [
+    {
+      "src": "/icon-192.png",
+      "sizes": "192x192",
+      "type": "image/png"
+    },
+    {
+      "src": "/icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png"
+    }
+  ],
+  "theme_color": "#2F5D46",
+  "background_color": "#F6F3EC",
+  "display": "standalone",
+  "start_url": "/"
+}
