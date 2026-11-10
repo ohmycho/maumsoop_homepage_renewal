@@ -1,0 +1,36 @@
+# 마음숲심리코칭 (maumsoop.com) · v1.0 (2026-11-10)
+# 검색엔진과 AI 검색(ChatGPT, Claude, Perplexity, Gemini, 네이버 등) 모두 허용
+User-agent: *
+Allow: /
+
+User-agent: Yeti
+Allow: /
+
+User-agent: Daumoa
+Allow: /
+
+User-agent: GPTBot
+Allow: /
+
+User-agent: OAI-SearchBot
+Allow: /
+
+User-agent: ChatGPT-User
+Allow: /
+
+User-agent: ClaudeBot
+Allow: /
+
+User-agent: Claude-SearchBot
+Allow: /
+
+User-agent: Claude-User
+Allow: /
+
+User-agent: PerplexityBot
+Allow: /
+
+User-agent: Google-Extended
+Allow: /
+
+Sitemap: https://maumsoop.com/sitemap.xml
