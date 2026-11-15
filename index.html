@@ -1,7 +1,8 @@
 <!DOCTYPE html>
 <!--
   마음숲심리코칭 공식 홈페이지 (maumsoop.com)
-  버전: v2.3.9 (2026-11-15) — 맨 위 '진행 중' 띠에 공지 3개까지 한 줄씩 모두 표시(4개부터 '더 보기'), 공지는 최신순
+  버전: v2.3.10 (2026-11-15) — 맨 위 띠를 다시 한 줄로: 최신 공지 3개를 4초마다 돌아가며(1/3), 4개 이상이면 '전체 n'. 공지 창 위쪽 잘림 수정(닫기 버튼 포커스가 창을 아래로 내리던 문제)
+  v2.3.9 (2026-11-15) — 맨 위 '진행 중' 띠에 공지 3개까지 한 줄씩 모두 표시, 공지는 최신순
   v2.3.8 (2026-11-15) — (되돌림) 공지 목록 3개 표시
   v2.3.7 (2026-11-15) — 이진·표태연·장서연 코치 사진 교체 (대표님이 준 사진, 얼굴 비율 맞춤)
   v2.3.6 (2026-11-15) — 이진 센터장 사진 교체, '꼼즈광교'에 네이버 지도 링크
@@ -34,7 +35,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="version" content="v2.3.9">
+  <meta name="version" content="v2.3.10">
   <title>마음숲심리코칭 | 등교거부·무기력 자녀를 둔 부모 심리상담 · 김지연 박사</title>
   <link rel="canonical" href="https://maumsoop.com/">
   <meta name="robots" content="index,follow,max-image-preview:large">
@@ -451,7 +452,7 @@
     .svc-badge{display:inline-flex;align-items:center;gap:4px;font-size:13px;font-weight:600;color:#8a5a00;background:#fff4d6;padding:6px 10px;border-radius:8px;white-space:nowrap}
     .sheet-bg{position:fixed;inset:0;z-index:65;background:rgba(0,0,0,.45);display:none;align-items:flex-end;justify-content:center}
     .sheet-bg.open{display:flex}
-    .sheet{width:100%;max-width:560px;max-height:85vh;overflow-y:auto;background:#fff;border-radius:20px 20px 0 0;padding:12px 20px calc(20px + env(safe-area-inset-bottom))}
+    .sheet{width:100%;max-width:560px;max-height:85vh;max-height:85dvh;overflow-y:auto;overscroll-behavior:contain;background:#fff;border-radius:20px 20px 0 0;padding:12px 20px calc(20px + env(safe-area-inset-bottom))}
     .sheet-grip{width:40px;height:4px;border-radius:2px;background:var(--g300);margin:0 auto 16px}
     .sheet h3{font-size:20px;font-weight:700;margin:6px 0 4px;line-height:1.35}
     .sheet .sum{font-size:15px;color:var(--g700)}
@@ -460,7 +461,12 @@
     .sheet .btn:disabled{background:var(--g200);color:var(--g500)}
     .nbar{background:var(--brand-50);border-bottom:1px solid var(--brand-100)}
     .nbar-btn{display:flex;align-items:center;gap:8px;width:100%;height:44px;text-align:left;font-size:14px}
-    .nbar-btn + .nbar-btn{border-top:1px solid var(--brand-100)}
+    .nbar-row{display:flex;align-items:center;gap:6px}
+    .nbar-row .nbar-btn{flex:1;min-width:0}
+    .nbar-btn.swap{animation:nbarIn .35s ease}
+    @keyframes nbarIn{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
+    @media (prefers-reduced-motion:reduce){.nbar-btn.swap{animation:none}}
+    .nbar-all{flex-shrink:0;font-size:12.5px;font-weight:600;color:var(--brand);background:#fff;border:1px solid var(--brand-100);border-radius:999px;padding:3px 9px}
     .nbar-btn .ntag{margin:0;flex-shrink:0}
     .nbar-title{flex:1;min-width:0;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;font-weight:600;color:var(--g900)}
     .nbar-more{flex-shrink:0;font-size:13px;color:var(--g600)}
@@ -755,7 +761,7 @@
         <a href="?coach" id="coachLink">코치용 화면</a>
       </div>
       <p>(주) 내 마음에 비친 내 모습 · 마음숲심리코칭</p>
-      <p style="margin-top:4px">v2.3.9 · 2026.11.15</p>
+      <p style="margin-top:4px">v2.3.10 · 2026.11.15</p>
     </div>
   </footer>
 
@@ -5540,16 +5546,30 @@
     function tagHTML(n) {
       return n.closed ? `<span class="ntag closed">마감</span>` : `<span class="ntag t-${esc(n.type)}">${esc(n.type)}</span>`;
     }
+    // 맨 위 띠: 한 줄에 최신 공지부터 3개까지 4초마다 돌아가며 보여 줌 (1/3 표시), 4개 이상이면 '전체 n' 버튼
+    let nbarTimer = null, nbarIdx = 0;
+    function renderNbar(active) {
+      clearInterval(nbarTimer); nbarIdx = 0;
+      const list = active.slice(0, NBAR_MAX);
+      if (!list.length) { $("nbarList").innerHTML = ""; return; }
+      const all = active.length > NBAR_MAX ? `<button class="nbar-all press" id="nbarAll">전체 ${active.length}</button>` : "";
+      const draw = swap => {
+        const n = list[nbarIdx % list.length];
+        $("nbarList").innerHTML = `<div class="nbar-row"><button class="nbar-btn press${swap ? " swap" : ""}" data-notice="${n.i}" aria-label="${esc(n.title)}">${tagHTML(n)}<span class="nbar-title">${esc(n.title)}</span>${list.length > 1 ? `<span class="nbar-more">${nbarIdx % list.length + 1}/${list.length}</span>` : ""}${icon("chevron-right")}</button>${all}</div>`;
+        const b = $("nbarAll"); if (b) b.onclick = openActiveList;
+      };
+      draw(false);
+      if (list.length > 1) nbarTimer = setInterval(() => {
+        if (document.hidden || $("sheetBg").classList.contains("open")) return;
+        nbarIdx++; draw(true);
+      }, 4000);
+    }
     function renderNotices() {
       // 최신 공지가 맨 위 (게시일 → 같은 날이면 시트 아래쪽 줄이 먼저)
       const newest = (a, b) => ((b.start || 0) - (a.start || 0)) || (b.i - a.i);
       const active = NOTICES.filter(n => n.active).sort(newest);
       ACTIVE = active;
-      // 맨 위 띠: 진행 중 공지 3개까지 한 줄씩, 4개 이상이면 마지막 줄에 '더 보기'
-      $("nbarList").innerHTML = active.slice(0, NBAR_MAX).map(n =>
-        `<button class="nbar-btn press" data-notice="${n.i}">${tagHTML(n)}<span class="nbar-title">${esc(n.title)}</span>${icon("chevron-right")}</button>`).join("") +
-        (active.length > NBAR_MAX ? `<button class="nbar-btn press" id="nbarMore"><span class="nbar-title" style="font-weight:500;color:var(--g600)">진행 중인 소식 ${active.length - NBAR_MAX}건 더 보기</span>${icon("chevron-right")}</button>` : "");
-      const nm = $("nbarMore"); if (nm) nm.onclick = openActiveList;
+      renderNbar(active);
       $("nbar").classList.toggle("is-empty", !active.length);
 
       const all = NOTICES.slice().sort((a, b) => (a.closed - b.closed) || newest(a, b));
@@ -5581,7 +5601,8 @@
         ${n.closed ? `<button class="btn block" disabled>마감되었어요</button>`
           : n.link ? `<a class="btn primary block press" href="${esc(n.link)}" target="_blank" rel="noopener">${esc(n.btn || "자세히 보기")}</a>` : ""}`;
       $("sheetBg").classList.add("open");
-      $("sheetClose").focus();
+      $("sheet").scrollTop = 0;
+      $("sheetClose").focus({ preventScroll: true });
     }
     function openActiveList() {
       if (ACTIVE.length === 1) return openNotice(ACTIVE[0].i);
@@ -5595,7 +5616,8 @@
             ${icon("chevron-right")}
           </button>`).join("")}</div>`;
       $("sheetBg").classList.add("open");
-      $("sheetClose").focus();
+      $("sheet").scrollTop = 0;
+      $("sheetClose").focus({ preventScroll: true });
     }
     function closeNotice() {
       $("sheetBg").classList.remove("open");
