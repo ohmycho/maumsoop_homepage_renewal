@@ -1,7 +1,8 @@
 <!DOCTYPE html>
 <!--
   마음숲심리코칭 공식 홈페이지 (maumsoop.com)
-  버전: v2.4.0 (2026-11-16) — 마음숲 토크 연결: 첫 화면 검색 아래 한 줄, 상담 안내 아래 '신청이 망설여지면' 한 줄, 하단 고정 버튼에 '털어놓기'(들어온 길 from=home)
+  버전: v2.4.1 (2026-11-18) — 구글 애널리틱스(G-8RPRY677HC): 방문·상담 예약/카톡/토크/멤버십/영상 재생/공지/검색 클릭 수, 하단 이용 통계 안내
+  v2.4.0 (2026-11-16) — 마음숲 토크 연결: 첫 화면 검색 아래 한 줄, 상담 안내 아래 '신청이 망설여지면' 한 줄, 하단 고정 버튼에 '털어놓기'(들어온 길 from=home)
   v2.3.10 (2026-11-15) — 맨 위 띠를 다시 한 줄로: 최신 공지 3개를 4초마다 돌아가며(1/3), 4개 이상이면 '전체 n'. 공지 창 위쪽 잘림 수정(닫기 버튼 포커스가 창을 아래로 내리던 문제)
   v2.3.9 (2026-11-15) — 맨 위 '진행 중' 띠에 공지 3개까지 한 줄씩 모두 표시, 공지는 최신순
   v2.3.8 (2026-11-15) — (되돌림) 공지 목록 3개 표시
@@ -36,7 +37,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="version" content="v2.4.0">
+  <meta name="version" content="v2.4.1">
   <title>마음숲심리코칭 | 등교거부·무기력 자녀를 둔 부모 심리상담 · 김지연 박사</title>
   <link rel="canonical" href="https://maumsoop.com/">
   <meta name="robots" content="index,follow,max-image-preview:large">
@@ -549,6 +550,9 @@
       .fcard{flex-basis:300px}
     }
   </style>
+<!-- 구글 애널리틱스 (마음숲심리코칭 · G-8RPRY677HC) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-8RPRY677HC"></script>
+<script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-8RPRY677HC');</script>
 </head>
 <body>
 
@@ -767,7 +771,8 @@
         <a href="?coach" id="coachLink">코치용 화면</a>
       </div>
       <p>(주) 내 마음에 비친 내 모습 · 마음숲심리코칭</p>
-      <p style="margin-top:4px">v2.4.0 · 2026.11.16</p>
+      <p style="margin-top:4px">v2.4.1 · 2026.11.18</p>
+      <p style="margin-top:4px;font-size:11px;opacity:.7">이용 통계를 위해 구글 애널리틱스를 사용해요 (개인을 알아볼 수 있는 정보는 모으지 않아요)</p>
     </div>
   </footer>
 
@@ -5807,5 +5812,32 @@
       setTimeout(() => $("library").scrollIntoView({ behavior: "smooth" }), 300);
     })();
   </script>
+
+<script>
+/* 이용 통계(구글 애널리틱스): 버튼 클릭만 셈. 이름·대화 내용 등 개인정보는 보내지 않음 */
+(function(){
+  function ev(n,p){try{if(window.gtag)gtag('event',n,p||{});}catch(e){}}
+  window.msqEvent=ev;
+  document.addEventListener('click',function(e){
+    var a=e.target.closest&&e.target.closest('a[href]');
+    if(a){var h=a.href;
+      if(/talk\.naver\.com/.test(h))ev('consult_click',{method:'naver_talk',site:'home'});
+      else if(/pf\.kakao\.com/.test(h))ev('consult_click',{method:'kakao',site:'home'});
+      else if(/talk\.maumsoop\.com/.test(h))ev('talk_click',{site:'home'});
+      else if(/\/join(\?|$)/.test(h))ev('membership_click',{site:'home'});
+      else if(/forms\.gle|docs\.google\.com\/forms/.test(h))ev('form_click',{site:'home',link_url:h});
+      else if(/naver\.me|map\.naver/.test(h))ev('map_click',{site:'home'});
+      else if(/maumsoop\.com/.test(h)&&a.hostname!==location.hostname)ev('site_link_click',{site:'home',link_url:h});
+    }
+    var b=e.target.closest&&e.target.closest('[data-play]');
+    if(b)ev('video_play',{site:'home',video_id:b.dataset.play,video_title:(b.dataset.title||'').slice(0,90)});
+    var n=e.target.closest&&e.target.closest('[data-notice]');
+    if(n)ev('notice_open',{site:'home',notice_title:(n.getAttribute('aria-label')||n.innerText||'').trim().slice(0,90)});
+  },true);
+  var s=document.getElementById('searchInput'),t;
+  if(s)s.addEventListener('input',function(){clearTimeout(t);t=setTimeout(function(){var q=s.value.trim();if(q.length>=2)ev('search',{search_term:q.slice(0,40),site:'home'});},2000);});
+  
+})();
+</script>
 </body>
 </html>
