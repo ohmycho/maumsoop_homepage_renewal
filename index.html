@@ -1,7 +1,8 @@
 <!DOCTYPE html>
 <!--
   마음숲심리코칭 공식 홈페이지 (maumsoop.com)
-  버전: v2.4.1 (2026-11-18) — 구글 애널리틱스(G-8RPRY677HC): 방문·상담 예약/카톡/토크/멤버십/영상 재생/공지/검색 클릭 수, 하단 이용 통계 안내
+  버전: v2.4.2 (2026-11-18) — 전체 영상 처음 5개만 (예전 10개), 더 보기는 10개씩
+  v2.4.1 (2026-11-18) — 구글 애널리틱스(G-8RPRY677HC): 방문·상담 예약/카톡/토크/멤버십/영상 재생/공지/검색 클릭 수, 하단 이용 통계 안내
   v2.4.0 (2026-11-16) — 마음숲 토크 연결: 첫 화면 검색 아래 한 줄, 상담 안내 아래 '신청이 망설여지면' 한 줄, 하단 고정 버튼에 '털어놓기'(들어온 길 from=home)
   v2.3.10 (2026-11-15) — 맨 위 띠를 다시 한 줄로: 최신 공지 3개를 4초마다 돌아가며(1/3), 4개 이상이면 '전체 n'. 공지 창 위쪽 잘림 수정(닫기 버튼 포커스가 창을 아래로 내리던 문제)
   v2.3.9 (2026-11-15) — 맨 위 '진행 중' 띠에 공지 3개까지 한 줄씩 모두 표시, 공지는 최신순
@@ -37,7 +38,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="version" content="v2.4.1">
+  <meta name="version" content="v2.4.2">
   <title>마음숲심리코칭 | 등교거부·무기력 자녀를 둔 부모 심리상담 · 김지연 박사</title>
   <link rel="canonical" href="https://maumsoop.com/">
   <meta name="robots" content="index,follow,max-image-preview:large">
@@ -771,7 +772,7 @@
         <a href="?coach" id="coachLink">코치용 화면</a>
       </div>
       <p>(주) 내 마음에 비친 내 모습 · 마음숲심리코칭</p>
-      <p style="margin-top:4px">v2.4.1 · 2026.11.18</p>
+      <p style="margin-top:4px">v2.4.2 · 2026.11.18</p>
       <p style="margin-top:4px;font-size:11px;opacity:.7">이용 통계를 위해 구글 애널리틱스를 사용해요 (개인을 알아볼 수 있는 정보는 모으지 않아요)</p>
     </div>
   </footer>
@@ -5348,7 +5349,7 @@
     const NOTICE_PAGE = 5;
     const NBAR_MAX = 3;      // 맨 위 '진행 중' 띠에 바로 보이는 공지 수 (넘으면 '더 보기')
     let NOTICES = [], ACTIVE = [], noticeShown = NOTICE_PAGE;
-    const PAGE = 10;
+    const PAGE = 5;   // 전체 영상: 처음 5개 (v2.4.2), '영상 더 보기'는 10개씩
     const isCoach = /[?&]coach\b/.test(location.search) || location.hash === "#coach";
     if (isCoach) document.body.classList.add("coach");
 
@@ -5755,7 +5756,7 @@
       if (el.dataset.clear === "q") { clearSearch(); return; }
     });
 
-    $("moreBtn").addEventListener("click", () => { state.shown += PAGE; renderLibrary(); });
+    $("moreBtn").addEventListener("click", () => { state.shown += 10; renderLibrary(); });
     $("narrowBtn").addEventListener("click", () => {
       const open = !$("kwWrap").classList.contains("open");
       $("kwWrap").classList.toggle("open", open);
