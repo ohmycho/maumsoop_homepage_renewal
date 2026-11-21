@@ -1,7 +1,8 @@
 <!DOCTYPE html>
 <!--
   마음숲심리코칭 공식 홈페이지 (maumsoop.com)
-  버전: v2.5.0 (2026-11-18) — 빨리 뜨게: 휴대폰에 화면 저장(sw.js), 영상 목록을 기기에 저장해 두고 먼저 그림, 내장 영상 410개는 videos.json으로·코치 사진은 별도 파일로 분리, 글꼴이 화면을 막지 않게
+  버전: v2.6.0 (2026-11-21) — 검색 키워드 '분당 심리코칭·분당 심리상담·분당 마음숲'을 제목·설명·구조화 데이터·화면 문구(오시는 길·자주 묻는 질문·하단)에 넣음, 이름 비슷한 센터 안내 질문 추가
+  v2.5.0 (2026-11-18) — 빨리 뜨게: 휴대폰에 화면 저장(sw.js), 영상 목록을 기기에 저장해 두고 먼저 그림, 내장 영상 410개는 videos.json으로·코치 사진은 별도 파일로 분리, 글꼴이 화면을 막지 않게
   v2.4.2 (2026-11-18) — 전체 영상 처음 5개만 (예전 10개), 더 보기는 10개씩
   v2.4.1 (2026-11-18) — 구글 애널리틱스(G-8RPRY677HC): 방문·상담 예약/카톡/토크/멤버십/영상 재생/공지/검색 클릭 수, 하단 이용 통계 안내
   v2.4.0 (2026-11-16) — 마음숲 토크 연결: 첫 화면 검색 아래 한 줄, 상담 안내 아래 '신청이 망설여지면' 한 줄, 하단 고정 버튼에 '털어놓기'(들어온 길 from=home)
@@ -39,8 +40,9 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="version" content="v2.5.0">
-  <title>마음숲심리코칭 | 등교거부·무기력 자녀를 둔 부모 심리상담 · 김지연 박사</title>
+  <meta name="version" content="v2.6.0">
+  <title>마음숲심리코칭 | 분당 심리상담·분당 심리코칭 · 등교거부·무기력 자녀 부모상담 · 김지연 박사</title>
+  <meta name="keywords" content="분당 심리코칭, 분당 심리상담, 분당 마음숲, 마음숲심리코칭, 마음숲, 분당 정자동 심리상담, 분당 부모상담, 분당 청소년상담, 성남 심리상담, 등교거부 상담, 김지연 박사">
   <link rel="canonical" href="https://maumsoop.com/">
   <meta name="robots" content="index,follow,max-image-preview:large">
   <meta name="author" content="마음숲심리코칭">
@@ -52,8 +54,8 @@
 <link rel="manifest" href="/site.webmanifest">
 <meta property="og:type" content="website">
 <meta property="og:site_name" content="마음숲심리코칭">
-<meta property="og:title" content="마음숲심리코칭 | 부모가 편안해지면 아이는 살아납니다">
-<meta property="og:description" content="부모가 편안해지면 아이는 살아납니다. 김지연 박사와 마음숲 코치들의 상담·강의·영상을 한곳에서.">
+<meta property="og:title" content="분당 마음숲심리코칭 | 부모가 편안해지면 아이는 살아납니다">
+<meta property="og:description" content="분당 심리상담·분당 심리코칭, 분당 마음숲. 김지연 박사와 마음숲 코치들의 상담·강의·영상을 한곳에서.">
 <meta property="og:url" content="https://maumsoop.com/">
 <meta property="og:locale" content="ko_KR">
 <meta property="og:image" content="https://maumsoop.com/og.png">
@@ -88,6 +90,9 @@
    "name": "마음숲심리코칭",
    "alternateName": [
     "마음숲",
+    "분당 마음숲",
+    "분당 마음숲심리코칭",
+    "마음숲 심리코칭 분당",
     "내 마음에 비친 내 모습",
     "내비친"
    ],
@@ -96,7 +101,7 @@
    "logo": "https://maumsoop.com/icon-512.png",
    "image": "https://maumsoop.com/og.png",
    "slogan": "부모가 편안해지면 아이는 살아납니다",
-   "description": "김지연 박사와 마음숲 코치들이 등교거부·자퇴·은둔, 스마트폰·게임, 무기력·학습부진 등 자녀 문제로 힘든 부모와 청소년을 돕는 심리코칭 센터. 분당 정자동 대면 개인상담, 온라인(줌) 단체상담·부모치유학교, 청소년 학생상담, 유튜브 채널과 멤버십 강의를 운영합니다.",
+   "description": "분당 정자동에 있는 분당 심리상담·분당 심리코칭 센터(분당 마음숲). 김지연 박사와 마음숲 코치들이 등교거부·자퇴·은둔, 스마트폰·게임, 무기력·학습부진 등 자녀 문제로 힘든 부모와 청소년을 돕는 심리코칭 센터. 분당 정자동 대면 개인상담, 온라인(줌) 단체상담·부모치유학교, 청소년 학생상담, 유튜브 채널과 멤버십 강의를 운영합니다.",
    "telephone": "+82-31-205-5015",
    "email": "maumbichin@naver.com",
    "address": {
@@ -106,7 +111,12 @@
     "addressRegion": "경기도",
     "addressCountry": "KR"
    },
+   "keywords": "분당 심리코칭, 분당 심리상담, 분당 마음숲, 분당 정자동 심리상담, 분당 부모상담, 분당 청소년상담, 성남 심리상담",
    "areaServed": [
+    {
+     "@type": "City",
+     "name": "성남시 분당구"
+    },
     {
      "@type": "Country",
      "name": "대한민국"
@@ -203,7 +213,7 @@
      "name": "마음숲심리코칭은 어떤 곳인가요?",
      "acceptedAnswer": {
       "@type": "Answer",
-      "text": "김지연 박사와 마음숲 코치들이 자녀 문제로 힘든 부모님과 청소년을 돕는 심리코칭 센터입니다. '부모가 편안해지면 아이는 살아납니다'라는 생각으로, 아이를 고치기 전에 부모의 마음부터 함께 살펴봅니다. 분당 정자동 센터의 대면 상담, 온라인 단체상담, 유튜브 채널과 멤버십 강의를 운영합니다."
+      "text": "분당 정자동에 있는 분당 심리상담·분당 심리코칭 센터(분당 마음숲)로, 김지연 박사와 마음숲 코치들이 자녀 문제로 힘든 부모님과 청소년을 돕습니다. '부모가 편안해지면 아이는 살아납니다'라는 생각으로, 아이를 고치기 전에 부모의 마음부터 함께 살펴봅니다. 분당 정자동 센터의 대면 상담, 온라인 단체상담, 유튜브 채널과 멤버십 강의를 운영합니다."
      }
     },
     {
@@ -248,6 +258,14 @@
     },
     {
      "@type": "Question",
+     "name": "이름이 비슷한 센터가 있던데, 같은 곳인가요?",
+     "acceptedAnswer": {
+      "@type": "Answer",
+      "text": "네, 이름이 비슷한 심리상담센터가 몇 곳 있어요. 김지연 박사가 이끄는 분당 마음숲심리코칭은 경기도 성남시 분당구 정자일로 121 더 샾 스타파크 2층 G02호(분당 정자동)에 있고, 전화는 031-205-5015, 010-2660-5015, 홈페이지는 maumsoop.com이에요. 상담 예약은 이 페이지의 상담 예약(네이버 톡톡)으로 남겨 주세요."
+     }
+    },
+    {
+     "@type": "Question",
      "name": "센터 위치와 운영 시간은요?",
      "acceptedAnswer": {
       "@type": "Answer",
@@ -260,7 +278,7 @@
 }
 </script>
 
-  <meta name="description" content="등교거부·자퇴·은둔, 스마트폰, 무기력, 부모 내면치유까지. 김지연 박사와 마음숲 코치들의 부모·청소년 심리상담(분당 정자동 대면, 온라인 단체상담)과 고민별 무료 영상 400여 개를 한곳에서 찾아보세요.">
+  <meta name="description" content="분당 심리상담·분당 심리코칭 센터 분당 마음숲(마음숲심리코칭). 등교거부·자퇴·은둔, 스마트폰, 무기력, 부모 내면치유까지 김지연 박사와 마음숲 코치들의 부모·청소년 심리상담(분당 정자동 대면, 온라인 단체상담)과 고민별 무료 영상 400여 개를 한곳에서 찾아보세요.">
           <link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
           <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable-dynamic-subset.min.css" media="print" onload="this.media='all'">
   <style>
@@ -737,12 +755,13 @@
         <p class="sec-label">자주 묻는 질문</p>
         <h2 class="sec-title">처음 오신 분들이 많이 물어요</h2>
         <div class="faq">
-          <details class="faq-item"><summary>마음숲심리코칭은 어떤 곳인가요?</summary><p>김지연 박사와 마음숲 코치들이 자녀 문제로 힘든 부모님과 청소년을 돕는 심리코칭 센터입니다. &#x27;부모가 편안해지면 아이는 살아납니다&#x27;라는 생각으로, 아이를 고치기 전에 부모의 마음부터 함께 살펴봅니다. 분당 정자동 센터의 대면 상담, 온라인 단체상담, 유튜브 채널과 멤버십 강의를 운영합니다.</p></details>
+          <details class="faq-item"><summary>마음숲심리코칭은 어떤 곳인가요?</summary><p>분당 정자동에 있는 분당 심리상담·분당 심리코칭 센터(분당 마음숲)로, 김지연 박사와 마음숲 코치들이 자녀 문제로 힘든 부모님과 청소년을 돕습니다. &#x27;부모가 편안해지면 아이는 살아납니다&#x27;라는 생각으로, 아이를 고치기 전에 부모의 마음부터 함께 살펴봅니다. 분당 정자동 센터의 대면 상담, 온라인 단체상담, 유튜브 채널과 멤버십 강의를 운영합니다.</p></details>
           <details class="faq-item"><summary>어떤 고민을 상담하나요?</summary><p>등교거부·자퇴·은둔, 스마트폰·게임 문제, 무기력·학습부진, 자해·우울·불안, 음주·흡연 같은 위기 행동, 부모 내면치유와 트라우마 대물림, 부모 대화법과 부부·가족관계 고민을 다룹니다. 고민별 무료 영상은 이 페이지 위쪽에서 검색해 보실 수 있어요.</p></details>
           <details class="faq-item"><summary>상담은 어떤 방식으로 받을 수 있나요?</summary><p>세 가지가 있어요. 개인상담은 부모님 한 분과 1:1로 만나는 예약제 상담입니다. 단체상담·부모치유학교는 같은 고민을 가진 부모님들과 온라인(줌)으로 만나는 그룹 상담이라 지역에 상관없이 참여할 수 있어요. 학생상담은 청소년 본인을 직접 만나 심리와 동기를 다룹니다.</p></details>
           <details class="faq-item"><summary>상담 예약은 어떻게 하나요?</summary><p>이 페이지의 &#x27;상담 예약&#x27; 버튼(네이버 톡톡)이나 &#x27;카톡 문의&#x27; 버튼으로 남겨 주세요. 전화(031-205-5015, 010-2660-5015)는 상담 중에는 받지 못하니 문자를 남겨 주시면 연락드립니다. 고민에 맞춰 인지적·정서적 배경을 고려해 코치를 배정합니다.</p></details>
           <details class="faq-item"><summary>멀리 살아서 센터에 가기 어려워요.</summary><p>온라인(줌)으로 진행하는 단체상담·부모치유학교는 지역에 상관없이 참여할 수 있어요. 먼저 고민에 맞는 무료 영상과 유튜브 멤버십 강의로 시작하셔도 좋습니다.</p></details>
           <details class="faq-item"><summary>유튜브 멤버십에는 무엇이 있나요?</summary><p>마음숲심리코칭 유튜브 채널 멤버십으로 운영하며, 공개 영상보다 깊은 회원 전용 강의, 강의를 보고 막힌 부분을 질문하는 회원 전용 라이브 Q&amp;A, 직접 해 보는 강의별 워크시트가 있습니다.</p></details>
+          <details class="faq-item"><summary>이름이 비슷한 센터가 있던데, 같은 곳인가요?</summary><p>네, 이름이 비슷한 심리상담센터가 몇 곳 있어요. 김지연 박사가 이끄는 분당 마음숲심리코칭은 경기도 성남시 분당구 정자일로 121 더 샾 스타파크 2층 G02호(분당 정자동)에 있고, 전화는 031-205-5015, 010-2660-5015, 홈페이지는 maumsoop.com이에요. 상담 예약은 이 페이지의 상담 예약(네이버 톡톡)으로 남겨 주세요.</p></details>
           <details class="faq-item"><summary>센터 위치와 운영 시간은요?</summary><p>경기도 성남시 분당구 정자일로 121 더 샾 스타파크 2층 G02호입니다. 화~금 11:00–21:00, 토 11:00–19:00에 운영하며 일요일과 월요일은 쉽니다. 대면 상담은 예약제입니다.</p></details>
         </div>
       </div>
@@ -753,7 +772,7 @@
     <!-- 9. 오시는 길 -->
     <section class="hide-on-search" id="contact">
       <div class="wrap">
-        <p class="sec-label">오시는 길 · 연락처</p>
+        <p class="sec-label">분당 심리상담 · 분당 심리코칭 · 분당 마음숲</p>
         <h2 class="sec-title">분당 정자동에 있어요</h2>
         <p class="sec-sub">대면 상담은 예약제로 운영해요</p>
         <div class="info-list">
@@ -776,8 +795,9 @@
         <a href="#faq">자주 묻는 질문</a>
         <a href="?coach" id="coachLink">코치용 화면</a>
       </div>
-      <p>(주) 내 마음에 비친 내 모습 · 마음숲심리코칭</p>
-      <p style="margin-top:4px">v2.5.0 · 2026.11.18</p>
+      <p>(주) 내 마음에 비친 내 모습 · 분당 마음숲심리코칭</p>
+      <p style="margin-top:4px">분당 심리상담 · 분당 심리코칭 · 031-205-5015</p>
+      <p style="margin-top:4px">v2.6.0 · 2026.11.21</p>
       <p style="margin-top:4px;font-size:11px;opacity:.7">이용 통계를 위해 구글 애널리틱스를 사용해요 (개인을 알아볼 수 있는 정보는 모으지 않아요)</p>
     </div>
   </footer>
